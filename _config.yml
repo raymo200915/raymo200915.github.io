@@ -1,0 +1,11 @@
+theme: minima
+title: Raymond Mao
+description: "Technical research and notes on Embedded Systems, Trusted Firmware, Secure Boot, Measured Boot, OTA update, and Open Source collaboration."
+url: https://raymo200915.github.io
+baseurl: ""
+footer_text: "© 2025 Raymond Mao<br>CISSP | Firmware Developer | IoT Security Professional |<br>OSS (Open Source Software) | Ex-Arm | Ex-Broadcom | PMP)"
+minima:
+  header_pages:
+    - about.md
+plugins:
+  - jekyll-sitemap

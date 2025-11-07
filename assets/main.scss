@@ -1,0 +1,65 @@
+---
+# Only the main Sass file needs front matter
+---
+
+@import "minima";
+
+/* ---- Custom Style Overrides ---- */
+
+/* post/page L1,L2,L3 */
+.post-content h1,
+.page-content h1 {
+  font-size: 2.0rem;
+  line-height: 1.25;
+}
+
+.post-content h2,
+.page-content h2 {
+  font-size: 1.5rem;
+  line-height: 1.35;
+}
+
+.post-content h3,
+.page-content h3 {
+  font-size: 1.2rem;
+  line-height: 1.45;
+}
+
+/* adaptation for hand-held device */
+@media (max-width: 600px) {
+  .post-content h1,
+  .page-content h1 { font-size: 2.1rem; }
+
+  .post-content h2,
+  .page-content h2 { font-size: 1.4rem; }
+
+  .post-content h3,
+  .page-content h3 { font-size: 1.15rem; }
+}
+
+/* Post list title */
+.post-list .post-link {
+  font-size: 1.15rem;   /* default ~1.0rem */
+  font-weight: 400;     /* boldness */
+}
+
+/* Post list date */
+.post-list .post-meta {
+  font-size: 0.80rem;   /* default ~0.9rem */
+  color: #666;
+}
+
+/* Homepage intro paragraph */
+.home .lead {
+  display: block;
+  font-size: 1.25rem;   /* enlarge */
+  line-height: 1.6;
+  color: #444;
+  margin: .25rem 0 1rem;
+  font-weight: 600;
+}
+
+/* adaptation for hand-held device */
+@media (max-width: 600px) {
+  .home .lead { font-size: 1.15rem; }
+}
