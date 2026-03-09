@@ -8,6 +8,7 @@ Raymond Mao
 
 - 15+ years of experience in embedded firmware development across Arm ecosystem, semiconductor vendors, and consumer device platforms.
 - Worked in Linaro, implemented Arm SystemReady-related specifications (UEFI/TCG/TPM) across TF-A, OP-TEE, and U-Boot, turning architecture-level standards into production-quality firmware.
+- Collaborating with RISE (RISC-V Software Ecosystem) to enable RISC-V core SW infrastructure to OpenSBI.
 - Co-developed the Firmware Handoff specification and led its end-to-end implementation across BL2 (TF-A), BL31 (SPMD), BL32 (OP-TEE), and BL33 (U-Boot), establishing a unified mechanism for runtime parameter handoff across multiple boot stages on arm64 platforms.
 - U-Boot custodian/maintainer for MbedTLS-port, with broader contributions across security and boot infrastructure, including crypto, bloblist, EFI loader, and TCG/TPM subsystems, covering feature development, integration, and upstream code review.
 - Extensive experience contributing to and maintaining open-source firmware projects (TF-A, OP-TEE, U-Boot, Linux); Proficient in patch series preparation, RFC discussions, iterative code review, rebase/amend cycles, and subsystem ownership.
