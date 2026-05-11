@@ -113,7 +113,7 @@ I also enbaled Firmware Handoff CI test on OP-TEE pipeline by below patch series
 
 To build and run on your local host:
 
-```
+```bash
 repo init -u https://github.com/OP-TEE/manifest.git -m qemu_v8.xml
 repo sync
 cd build
@@ -124,7 +124,7 @@ make ARM_FIRMWARE_HANDOFF=y run-only
 
 After kernel lauches, run Xtest 1001 by:
 
-```
+```bash
 xtest 1001
 ```
 

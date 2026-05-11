@@ -63,3 +63,276 @@
 @media (max-width: 600px) {
   .home .lead { font-size: 1.15rem; }
 }
+
+/* VS Code-like syntax highlighting */
+
+:root {
+  --code-bg: #1e1e1e;
+  --code-fg: #d4d4d4;
+  --code-border: #2d2d2d;
+  --code-plain-bg: #f8f9fb;
+  --code-plain-fg: #2f3542;
+  --code-plain-border: #dfe4ea;
+  --code-inline-bg: #f3f4f6;
+  --code-inline-fg: #c7254e;
+  --code-comment: #6a9955;
+  --code-keyword: #569cd6;
+  --code-storage: #c586c0;
+  --code-string: #ce9178;
+  --code-number: #b5cea8;
+  --code-func: #dcdcaa;
+  --code-type: #4ec9b0;
+  --code-const: #4fc1ff;
+  --code-operator: #d4d4d4;
+  --code-error-bg: #f14c4c;
+  --code-error-fg: #ffffff;
+}
+
+.post-content code,
+.page-content code {
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  background: var(--code-inline-bg);
+  color: var(--code-inline-fg);
+  font-size: 0.92em;
+}
+
+.post-content pre code,
+.page-content pre code,
+.post-content .highlight code,
+.page-content .highlight code {
+  padding: 0;
+  background: transparent;
+  color: inherit;
+}
+
+.post-content div.highlighter-rouge,
+.page-content div.highlighter-rouge,
+.post-content .highlight,
+.page-content .highlight {
+  margin: 1rem 0 1.5rem;
+  background: var(--code-plain-bg);
+}
+
+.post-content .highlighter-rouge pre,
+.page-content .highlighter-rouge pre,
+.post-content .highlight pre,
+.page-content .highlight pre {
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--code-plain-border);
+  border-radius: 10px;
+  background: var(--code-plain-bg);
+  color: var(--code-plain-fg);
+  overflow-x: auto;
+  line-height: 1.6;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.post-content .highlighter-rouge pre,
+.page-content .highlighter-rouge pre,
+.post-content .highlight pre,
+.page-content .highlight pre,
+.post-content .highlight code,
+.page-content .highlight code {
+  font-family: "Consolas", "Monaco", "Cascadia Code", "SFMono-Regular",
+    "Liberation Mono", monospace;
+}
+
+/* Default for non-target languages: keep a plain monospace block without syntax colors */
+.post-content .highlight,
+.page-content .highlight {
+  color: var(--code-plain-fg);
+  background: var(--code-plain-bg);
+}
+
+.post-content .highlight span,
+.page-content .highlight span {
+  color: inherit;
+  background: transparent;
+}
+
+/* Fallback for languages not lexed by Rouge but still tagged on <code> */
+.post-content pre:has(> code.language-dts),
+.page-content pre:has(> code.language-dts),
+.post-content pre:has(> code.language-dtsi),
+.page-content pre:has(> code.language-dtsi) {
+  padding: 0;
+  border: 1px solid var(--code-border);
+  border-radius: 10px;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.post-content pre > code.language-dts,
+.page-content pre > code.language-dts,
+.post-content pre > code.language-dtsi,
+.page-content pre > code.language-dtsi {
+  display: block;
+  padding: 1rem 1.1rem;
+  background: transparent;
+  color: var(--code-fg);
+}
+
+/* Apply VS Code-like token colors only to selected languages */
+.post-content .language-c .highlight,
+.page-content .language-c .highlight,
+.post-content .language-h .highlight,
+.page-content .language-h .highlight,
+.post-content .language-cpp .highlight,
+.page-content .language-cpp .highlight,
+.post-content .language-cxx .highlight,
+.page-content .language-cxx .highlight,
+.post-content .language-cc .highlight,
+.page-content .language-cc .highlight,
+.post-content .language-bash .highlight,
+.page-content .language-bash .highlight,
+.post-content .language-sh .highlight,
+.page-content .language-sh .highlight,
+.post-content .language-shell .highlight,
+.page-content .language-shell .highlight,
+.post-content .language-zsh .highlight,
+.page-content .language-zsh .highlight,
+.post-content .language-console .highlight,
+.page-content .language-console .highlight,
+.post-content .language-json .highlight,
+.page-content .language-json .highlight,
+.post-content .language-yaml .highlight,
+.page-content .language-yaml .highlight,
+.post-content .language-yml .highlight,
+.page-content .language-yml .highlight,
+.post-content .language-diff .highlight,
+.page-content .language-diff .highlight,
+.post-content .language-patch .highlight,
+.page-content .language-patch .highlight,
+.post-content .language-makefile .highlight,
+.page-content .language-makefile .highlight,
+.post-content .language-make .highlight,
+.page-content .language-make .highlight,
+.post-content .language-dts .highlight,
+.page-content .language-dts .highlight,
+.post-content .language-dtsi .highlight,
+.page-content .language-dtsi .highlight,
+.post-content .language-python .highlight,
+.page-content .language-python .highlight,
+.post-content .language-py .highlight,
+.page-content .language-py .highlight {
+  color: var(--code-fg);
+  background: var(--code-bg);
+
+  pre {
+    border-color: var(--code-border);
+    background: var(--code-bg);
+    color: var(--code-fg);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+
+  .w { color: var(--code-fg); }
+
+  .c,
+  .ch,
+  .cd,
+  .cm,
+  .cpf,
+  .c1,
+  .cs {
+    color: var(--code-comment);
+    font-style: italic;
+  }
+
+  .k,
+  .kc,
+  .kd,
+  .kn,
+  .kp,
+  .kr,
+  .kt,
+  .nt,
+  .ow {
+    color: var(--code-keyword);
+  }
+
+  .bp,
+  .nb,
+  .nv,
+  .vc,
+  .vg,
+  .vi,
+  .vm {
+    color: var(--code-const);
+  }
+
+  .na,
+  .nc,
+  .ne,
+  .nf,
+  .fm,
+  .nn {
+    color: var(--code-func);
+  }
+
+  .nl,
+  .py,
+  .nx {
+    color: var(--code-fg);
+  }
+
+  .s,
+  .sa,
+  .sb,
+  .sc,
+  .dl,
+  .sd,
+  .s2,
+  .se,
+  .sh,
+  .si,
+  .sx,
+  .sr,
+  .s1,
+  .ss {
+    color: var(--code-string);
+  }
+
+  .m,
+  .mb,
+  .mf,
+  .mh,
+  .mi,
+  .il,
+  .mo {
+    color: var(--code-number);
+  }
+
+  .o,
+  .p,
+  .cp {
+    color: var(--code-operator);
+  }
+
+  .gh,
+  .gu,
+  .gp,
+  .gs {
+    color: var(--code-storage);
+  }
+
+  .no,
+  .err {
+    color: var(--code-error-fg);
+  }
+
+  .err {
+    background: var(--code-error-bg);
+  }
+}
+
+@media (max-width: 600px) {
+  .post-content .highlighter-rouge pre,
+  .page-content .highlighter-rouge pre,
+  .post-content .highlight pre,
+  .page-content .highlight pre {
+    padding: 0.9rem;
+    border-radius: 8px;
+  }
+}

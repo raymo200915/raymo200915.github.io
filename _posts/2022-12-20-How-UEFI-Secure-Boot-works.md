@@ -85,7 +85,7 @@ UEFI implementation.
 Below is the high-level call flow you’ll see when U-Boot loads and verifies
 a PE/COFF EFI binary under Secure Boot:
 
-```
+```text
 efi_load_pe()
   └─ efi_image_authenticate()
        ├─ efi_image_parse()                  // find & parse WIN_CERTIFICATE entries
@@ -125,7 +125,7 @@ What is `WIN_CERTIFICATE`?
 
 It’s the container format Microsoft/UEFI use for signatures embedded in the PE file’s Attribute Certificate Table. The layout (simplified) is:
 
-```
+```c
 typedef struct {
     uint32_t dwLength;         // total length including header
     uint16_t wRevision;        // usually 0x0200
@@ -183,7 +183,7 @@ For each SignerInfo:
 
   An example of PKCS#9 Authentication Attributes (`contentType`=`SPC_INDIRECT_DATA_OBJID`) embedded with `messageDigest` (encoded in ASN1 DER format):
 
-  ```
+  ```text
   [C.P.0] {
     U.P.SEQUENCE {
         U.P.OBJECTIDENTIFIER 1.2.840.113549.1.9.3 (contentType)
@@ -251,7 +251,7 @@ This step ties the signature to the actual PE/COFF file contents.
 
   Excample of an Authenticode embedded with digest and digest algorithm (encoded in ASN1 DER format):
 
-  ```
+  ```text
   U.P.SEQUENCE {
     U.P.SEQUENCE {
         U.P.OBJECTIDENTIFIER 2.16.840.1.101.3.4.2.1 (sha256)
@@ -279,55 +279,55 @@ Create a Platform Key (PK), Key Exchange Key (KEK), and allowed-signature databa
 
 - Generate private key PK.key and cert PK.crt
 
-```
+```bash
 openssl req -x509 -sha256 -newkey rsa:2048 -subj /CN=TEST_PK/ -keyout PK.key -out PK.crt -nodes -days 365
 ```
 
 - Generate PK esl and auth (GUID='11111111-2222-3333-4444-123456789abc', Timestamp='2020-4-1 00:00:00').
 
-```
+```bash
 cert-to-efi-sig-list -g '11111111-2222-3333-4444-123456789abc' PK.crt PK.esl; sign-efi-sig-list -t "2020-04-01" -c PK.crt -k PK.key PK PK.esl PK.auth
 ```
 
 - Create an empty esl for the noPK (noPK.esl) to reset secure boot. This essentially removes the PK to disable secure boot temporarily.
 
-```
+```bash
 touch noPK.esl; sign-efi-sig-list -t "2020-04-02" -c PK.crt -k PK.key PK noPK.esl noPK.auth
 ```
 
 - Generate private key KEK.key and cert KEK.crt.
 
-```
+```bash
 openssl req -x509 -sha256 -newkey rsa:2048 -subj /CN=TEST_KEK/ -keyout KEK.key -out KEK.crt -nodes -days 365
 ```
 
 - Generate KEK esl and auth (GUID='11111111-2222-3333-4444-123456789abc', Timestamp='2020-4-3 00:00:00').
 
-```
+```bash
 cert-to-efi-sig-list -g '11111111-2222-3333-4444-123456789abc' KEK.crt KEK.esl; sign-efi-sig-list -t "2020-04-03" -c PK.crt -k PK.key KEK KEK.esl KEK.auth
 ```
 
 - Generate private key db.key and cert db.crt.
 
-```
+```bash
 openssl req -x509 -sha256 -newkey rsa:2048 -subj /CN=TEST_db/ -keyout db.key -out db.crt -nodes -days 365
 ```
 
 - Generate db esl and auth (GUID='11111111-2222-3333-4444-123456789abc', Timestamp='2020-4-4 00:00:00').
 
-```
+```bash
 cert-to-efi-sig-list -g '11111111-2222-3333-4444-123456789abc' db.crt db.esl; sign-efi-sig-list -t "2020-04-04" -c KEK.crt -k KEK.key db db.esl db.auth
 ```
 
 - Generate private key dbx.key and cert dbx.crt
 
-```
+```bash
 openssl req -x509 -sha256 -newkey rsa:2048 -subj /CN=TEST_dbx/ -keyout dbx.key -out dbx.crt -nodes -days 365
 ```
 
 - Generate dbx esl and auth (GUID='11111111-2222-3333-4444-123456789abc', Timestamp='2020-4-5 00:00:00').
 
-```
+```bash
 cert-to-efi-sig-list -g '11111111-2222-3333-4444-123456789abc' dbx.crt dbx.esl; sign-efi-sig-list -t "2020-04-05" -c KEK.crt -k KEK.key dbx dbx.esl dbx.auth
 ```
 
@@ -339,7 +339,7 @@ Build U-Boot qemu_arm64 with selecting `CONFIG_EFI_SECURE_BOOT` and `CONFIG_SEMI
 
 When enabling `CONFIG_EFI_SECURE_BOOT=y`, below options will be enabled automatically:
 
-```
+```makefile
 CONFIG_RSA_VERIFY_WITH_PKEY=y
 CONFIG_ASYMMETRIC_KEY_TYPE=y
 CONFIG_ASYMMETRIC_PUBLIC_KEY_SUBTYPE=y
@@ -360,13 +360,13 @@ After building, we have `u-boot.bin` and an EFI test image `helloworld.efi`.
 
 Sign the EFI test image by:
 
-```
+```bash
 sbsign --key db.key --cert db.crt --output helloworld-signed.efi helloworld.efi
 ```
 
 Verify the signed image by:
 
-```
+```bash
 sbverify --cert db.crt helloworld-signed.efi
 ```
 
@@ -374,13 +374,13 @@ sbverify --cert db.crt helloworld-signed.efi
 
 Place the EFI test image and UEFI certs into a folder \<FILE_DIR\>
 
-```
+```bash
 virt-make-fs --partition=gpt --size=+1M --type=vfat <FILE_DIR> <OUTPUT_IMAGE_NAME>
 ```
 
 For example:
 
-```
+```bash
 virt-make-fs --partition=gpt --size=+1M --type=vfat uefi_certs test_efi_secboot.img
 ```
 
@@ -388,25 +388,25 @@ virt-make-fs --partition=gpt --size=+1M --type=vfat uefi_certs test_efi_secboot.
 
 Run U-Boot with mounting the created image as a virtio device
 
-```
+```bash
 qemu-system-aarch64 -bios u-boot.bin -machine virt -cpu cortex-a57 -smp 1 -m 4G -d unimp -nographic -serial mon:stdio -semihosting -drive if=none,file=<OUTPUT_IMAGE_NAME>,format=raw,id=hd0 -device virtio-blk-device,drive=hd0
 ```
 
 After launching U-Boot console, check if the EFI test image file (`helloworld-signed.efi` and `helloworld.efi`) and UEFI certs exist in the virtio partition (e.g. partition 1)
 
-```
+```bash
 ls virtio 0:1
 ```
 
 Load the signed EFI image file from the virtio partition into a memory address (`$loadaddr`, Check the variable `loadaddr` by `printenv`)
 
-```
+```bash
 load virtio 0:1 ${loadaddr} helloworld-signed.efi
 ```
 
 Load UEFI certs from the virtio partition and save them as EFI variables (PK, KEK, db, dbx)
 
-```
+```bash
 load virtio 0:1 90000000 PK.auth && setenv -e -nv -bs -rt -at -i 90000000:$filesize PK
 load virtio 0:1 90000000 KEK.auth && setenv -e -nv -bs -rt -at -i 90000000:$filesize KEK
 load virtio 0:1 90000000 db.auth && setenv -e -nv -bs -rt -at -i 90000000:$filesize db
@@ -415,14 +415,14 @@ load virtio 0:1 90000000 dbx.auth && setenv -e -nv -bs -rt -at -i 90000000:$file
 
 Below errors can be ignored since we do not have RPMB to save NV when running in qemu:
 
-```
+```bash
 No EFI system partition
 Failed to persist EFI variables
 ```
 
 (Optional) To remove these errors by skipping saving EFI variables into NV via below Kconfig settings:
 
-```
+```makefile
 # CONFIG_EFI_VARIABLE_FILE_STORE is not set
 CONFIG_EFI_VARIABLE_NO_STORE=y
 # CONFIG_EFI_VARIABLES_PRESEED is not set
@@ -430,13 +430,13 @@ CONFIG_EFI_VARIABLE_NO_STORE=y
 
 Boot the EFI image file from the memory address (`fdt_addr` is optional is you want to run with a specified Device Tree)
 
-```
+```bash
 bootefi ${loadaddr} ${fdt_addr}
 ```
 
 Below prompt logs indicate a successful UEFI Secure Boot process.
 
-```
+```bash
 Hello, world!
 Running on UEFI 2.10
 ```

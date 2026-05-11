@@ -99,7 +99,7 @@ the trap handler.
 A new provider abstraction is introduced to represent wired interrupt
 controllers:
 
-```
+```c
 struct sbi_irqchip_provider_ops {
 
 /*
@@ -246,7 +246,7 @@ Expected behavior:
 
 ## End-to-End Interrupt Flow
 
-```
+```text
 UART RX
   → APLIC (root, wired)
     → IDC.CLAIMI
@@ -281,21 +281,21 @@ Get Buildroot source code:
 The complete build & test environment is leveraging Buildroot as an umbrella project.
 Get Buildroot code from the branch for RP016-M2:
 
-```
+```bash
 $ git clone https://gitlab.com/riseproject/riscv-optee/buildroot.git -b
 rp016_m2_aplic_v2
 ```
 
 Configure Buildroot:
 
-```
+```bash
 $ cd buildroot
 $ make qemu_riscv64_virt_optee_defconfig
 ```
 
 Build:
 
-```
+```bash
 $ make -j$(nproc)
 ```
 
@@ -303,7 +303,7 @@ To avoid building errors due to outdated Buildroot native
 CMakeLists.txt files, if you have a CMAKE version \> 3.30 on your host,
 build with:
 
-```
+```bash
 $ make -j$(nproc) CMAKE\_POLICY\_VERSION\_MINIMUM=3.5
 ```
 
@@ -314,14 +314,14 @@ be found under `output/build`.
 
 Start QEMU and launch the kernel:
 
-```
+```bash
 $ ./output/images/start-qemu-kernel.sh
 ```
 
 When the following output appears on the console, QEMU is waiting for a
 pending connection.
 
-```
+```bash
 qemu-system-riscv64: -chardev
 socket,id=vc0,host=127.0.0.1,port=64321,server=on,wait=on: info: QEMU
 waiting for connection on: disconnected:tcp:127.0.0.1:64321,server=on
@@ -329,7 +329,7 @@ waiting for connection on: disconnected:tcp:127.0.0.1:64321,server=on
 
 Connect to QEMU via a new console by using telnet to port 64321:
 
-```
+```bash
 $ telnet 127.0.0.1 64321
 ```
 
@@ -340,7 +340,7 @@ By typing any key in the OpenSBI console, you should see logs below,
 which indicates successful wired interrupt handling
 (claimed/handled/completed) in M-mode.
 
-```
+```bash
 [IRQCHIP] claim hwirq <IRQ_NUM>
 [IRQCHIP] calling handler for hwirq <IRQ_NUM>
 [APLIC TEST] UART got '<KEY_NAME>'(<KEY_ASCII>)
@@ -349,7 +349,7 @@ which indicates successful wired interrupt handling
 
 For example, if you press ‘a’, you should see:
 
-```
+```bash
 [IRQCHIP] claim hwirq 10
 [IRQCHIP] calling handler for hwirq 10
 [APLIC TEST] UART got 'a'(0x61)
@@ -361,7 +361,7 @@ For example, if you press ‘a’, you should see:
 In Linux console, after logging in as root, confirm the APLIC is
 registered properly:
 
-```
+```bash
 $ dmesg | egrep -i "aplic|imsic|aia|irqchip|riscv-intc"
 [    0.000000] riscv-intc: 64 local interrupts mapped
 [    0.591472] riscv-aplic d000000.interrupt-controller: 96 interrupts directly connected to 2 CPUs
@@ -369,7 +369,7 @@ $ dmesg | egrep -i "aplic|imsic|aia|irqchip|riscv-intc"
 
 Check the IRQ status:
 
-```
+```bash
 $ cat /proc/interrupts
            CPU0       CPU1       
  10:        974       1041 RISC-V INTC   5 Edge      riscv-timer
@@ -395,19 +395,19 @@ effects from our changes.
 
 In the Linux console, enable hvc1:
 
-```
+```bash
 $ setsid sh </dev/hvc1 >/dev/hvc1 2>&1
 ```
 
 Connect to QEMU via a new console by using telnet to port 64322:
 
-```
+```bash
 $ telnet 127.0.0.1 64322
 ```
 
 Start tracking the IRQ status in this new monitor console:
 
-```
+```bash
 $ watch -n 1 cat /proc/interrupts
 ```
 
@@ -421,7 +421,7 @@ for example, IRQ13 or IRQ14.
 
 Bind the IRQ to CPU1:
 
-```
+```bash
 $ echo 1 > /proc/irq/14/smp_affinity_list
 ```
 
@@ -430,7 +430,7 @@ incrementing.
 
 Bind the IRQ to CPU0:
 
-```
+```bash
 $ echo 0 > /proc/irq/14/smp_affinity_list
 ```
 

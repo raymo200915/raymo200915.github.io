@@ -178,7 +178,7 @@ Design Goals:
 
 \[1\] SMBIOS subtree layout:
 
-```
+```dts
 / {
   smbios {
     compatible = "u-boot,sysinfo-smbios";
@@ -219,7 +219,7 @@ Design Goals:
 
 \[3\] `cache` child node layout example with 2-level cache:
 
-```
+```dts
 / {
   smbios {
     compatible = "u-boot,sysinfo-smbios";
@@ -262,7 +262,7 @@ Design Goals:
 
 \[4\] `system-slot` child node layout example with 1 ISA slot and 1 PCMCIA slot:
 
-```
+```dts
 / {
   smbios {
     compatible = "u-boot,sysinfo-smbios";
@@ -317,7 +317,7 @@ Design Goals:
 
 \[5\] `memory-array` child node layout example with 2 arrays:
 
-```
+```dts
 / {
   smbios {
     compatible = "u-boot,sysinfo-smbios";
@@ -352,7 +352,7 @@ Design Goals:
 
 \[6\] `memory-device` child node layout example with 2 arrays:
 
-```
+```dts
 / {
   smbios {
     compatible = "u-boot,sysinfo-smbios";
@@ -451,7 +451,7 @@ Design Goals:
 
 \[7\] `memory-array-mapped-address` child node layout example with 2 address entries:
 
-```
+```dts
 / {
   smbios {
     compatible = "u-boot,sysinfo-smbios";
@@ -484,7 +484,7 @@ Design Goals:
 
 \[8\] Example of `memory` Device Tree nodes
 
-```
+```dts
 memory@80000000 {
   device_type = "memory";
   reg = <0x0 0x80000000 0x0 0x40000000>; // 1GB
@@ -493,7 +493,7 @@ memory@80000000 {
 
 \[9\] Example of `memory-controller` Device Tree nodes
 
-```
+```dts
 memory-controller@f0000000 {
   compatible = "test,memory-controller";
   ecc-enabled;

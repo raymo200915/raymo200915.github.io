@@ -193,7 +193,7 @@ seconds, while the number of CPU cycles per byte is an average number of
 processing 4096 times with the same data block size.
 
 Below is the result:
-```
+```text
 Original:
 SHA-256: 87972 KiB/s, 23 cycles/byte
 SHA-512: 107328 KiB/s, 20 cycles/byte
@@ -253,7 +253,7 @@ Below is the PR link:
 \[1\]: buildman output for size comparison (With both MBEDTLS\_LIB and
 MBEDTLS\_LIB\_CRYPTO selected (qemu\_arm64, sandbox and nanopi\_a64)
 
-```
+```bash
 aarch64: (for 2/2 boards) all -1568.0 bss -8.0 data -64.0 rodata +200.0 text -1696.0
     qemu_arm64     : all +4472 bss -16 data -64 rodata +200 text +4352
         u-boot: add: 29/-14, grow: 6/-13 bytes: 12812/-8084 (4728)

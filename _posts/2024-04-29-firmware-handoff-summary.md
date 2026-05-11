@@ -69,7 +69,7 @@ This common handoff format:
 Get the makefile for building from my Github project:
 https://github.com/raymo200915/firmware_handoff_build_with_measured_boot
 
-```
+```bash
 $ git clone git@github.com:raymo200915/firmware_handoff_build_with_measured_boot.git
 ```
 

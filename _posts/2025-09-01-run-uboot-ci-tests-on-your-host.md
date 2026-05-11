@@ -56,7 +56,7 @@ this script into the U-Boot root directory.
 
 Build and run docker image with the new Dockerfile by:
 
-```
+```bash
 sudo docker build --network=host \
 -t uboot-ci:<YOUR_TAG> \
 -f tools/docker/Dockerfile .
@@ -71,7 +71,7 @@ In the docker console, run below command with the board type, board
 identity, testcase name you want to test with, plus address / branch
 name of your remote test hooks git repository.
 
-```
+```bash
 TEST_PY_BD="<BOARD_TYPE>" TEST_PY_ID="--id <BOARD_ID>" \
 TEST_PY_TEST_SPEC="<TESTCASE_NAME>" \
 TEST_HOOKS_GIT="<YOUR_TEST_HOOK_GIT_ADDR>" \
@@ -83,7 +83,7 @@ Below are the default values (which I used to verify the CI enablement
 for Firmware Handoff) for each environment if they do not exist in the
 command line:
 
-```
+```bash
 TEST_PY_BD="qemu_arm64"
 TEST_PY_ID="--id fw_handoff_tfa_optee"
 TEST_PY_TEST_SPEC="test_fw_handoff"

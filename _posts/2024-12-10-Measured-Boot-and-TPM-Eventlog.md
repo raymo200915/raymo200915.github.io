@@ -157,7 +157,7 @@ Event Log transmission across the boot chain:
 
       Below are the PCR being extended and the events associated with:
 
-      ```
+      ```text
       PCR[0] - EV_S_CRTM_VERSION
       PCR[1] - EV_EFI_HANDOFF_TABLES2
       PCR[1] - EV_EFI_VARIABLE_BOOT2
@@ -180,7 +180,7 @@ Event Log transmission across the boot chain:
 
       Linux exposes the Event Log to:
 
-      ```
+      ```bash
       /sys/kernel/security/tpm0/binary_bios_measurements
       /sys/kernel/security/tpm0/ascii_bios_measurements
       ```
