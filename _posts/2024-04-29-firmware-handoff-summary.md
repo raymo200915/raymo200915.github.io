@@ -154,7 +154,7 @@ U-Boot:
 
   - [\[PATCH v7 3/3\] tpm: get tpm event log from bloblist](https://lore.kernel.org/u-boot/20250127144941.645544-3-raymond.mao@linaro.org/)
 
-- Extension for Device Tree Overlay handoff (upstreaming in progress):
+- Extension for Device Tree Overlay handoff:
 
   - [\[PATCH v3 0/6\] Add support for DT overlays handoff](https://lore.kernel.org/u-boot/20250718141621.3147633-1-raymond.mao@linaro.org/)
 

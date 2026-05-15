@@ -164,15 +164,9 @@ Design Goals:
 
   [\[PATCH v3 00/10\] SMBIOS improvements](https://lore.kernel.org/u-boot/20241206225438.13866-1-raymond.mao@linaro.org/)
 
-- Implementation of Type #9 and bug-fix (upstream in progress):
+- Implementation of Type #9 / #16 / #17 / #19 and bug-fix:
 
-  [\[PATCH v3 1/2\] smbios: Fix duplicated smbios handles](https://lore.kernel.org/u-boot/20250919205605.291108-1-raymond.mao@linaro.org/)
-
-  [\[PATCH v3 2/2\] smbios: add support for dynamic generation of Type 9 system slot tables](https://lore.kernel.org/u-boot/20250919205605.291108-2-raymond.mao@linaro.org/)
-
-- Implementation of Type #16 / #17 / #19:
-
-  \[WIP\]
+  [\[PATCH v6 0/6\] Implement all missing SMBIOS types required by distro tooling](https://lore.kernel.org/u-boot/20260213225254.2544596-1-raymondmaoca@gmail.com/#t)
 
 # Reference
 
