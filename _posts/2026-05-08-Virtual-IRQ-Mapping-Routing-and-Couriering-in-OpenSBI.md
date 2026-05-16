@@ -452,7 +452,9 @@ The goal is to demonstrate that UART RX (HWIRQ 10) interrupts are mapped, routed
 
 All implementations are already merged into [RISE (RISC-V Software Ecosystem) Gitlab Projects](https://gitlab.com/riseproject/riscv-optee/) and ready for testing as part of the [RP016 project](https://lf-rise.atlassian.net/wiki/spaces/HOME/pages/699924494/Project+RP016+OpenSBI+feature+additions+to+support+TEEs+for+RISC-V/) deliverables.
 
-Get Buildroot source code:
+The OpenSBI patches and test bare-metal application can be found at:
+https://gitlab.com/riseproject/riscv-optee/opensbi/-/tree/rp016_m3_virq_v3
+https://gitlab.com/riseproject/riscv-optee/bm-app/-/tree/rp016_m3_virq_v2
 
 The complete build & test environment is leveraging Buildroot as an umbrella project.
 Get Buildroot code from the branch for RP016-M3:
@@ -722,6 +724,12 @@ IPI7: 0 0 KGDB roundup interrupts
 The APLIC-DIRECT counters should keep incrementing. Continue pressing keys in the bare-metal console while watching `/proc/interrupts` in Linux; Linux IRQ delivery should remain unaffected.
 
 This demonstrates that VIRQ mapping, routing, and couriering only apply to HWIRQs explicitly bound to a destination domain through DeviceTree rules. Other interrupts continue to follow the default root-domain path.
+
+# Upstream Efforts
+
+The patch set was posted to OpenSBI mailing list and ready for review:
+
+[[PATCH 00/10] Introduce Virtual IRQ (VIRQ) framework](https://lore.kernel.org/opensbi/20260514225756.2255758-1-raymondmaoca@gmail.com/)
 
 # Appendix - Programming Interface
 

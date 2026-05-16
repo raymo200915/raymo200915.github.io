@@ -276,7 +276,9 @@ This validates:
 
 All implementations are already merged into [RISE (RISC-V Software Ecosystem) Gitlab Projects](https://gitlab.com/riseproject/riscv-optee/) and ready for testing as part of the [RP016 project](https://lf-rise.atlassian.net/wiki/spaces/HOME/pages/699924494/Project+RP016+OpenSBI+feature+additions+to+support+TEEs+for+RISC-V/) deliverables.
 
-Get Buildroot source code:
+The OpenSBI patches and test bare-metal application can be found at:
+https://gitlab.com/riseproject/riscv-optee/opensbi/-/tree/rp016_m2_aplic_v2
+https://gitlab.com/riseproject/riscv-optee/bm-app/-/tree/rp016_m1
 
 The complete build & test environment is leveraging Buildroot as an umbrella project.
 Get Buildroot code from the branch for RP016-M2:
@@ -441,14 +443,12 @@ IRQ affinity.
 
 More IRQ affinity tests can be performed, please reference on [Tune IRQ Affinity](https://documentation.ubuntu.com/real-time/latest/how-to/tune-irq-affinity/)
 
-## Upstream Efforts
+# Upstream Efforts
 
 The patch set was posted to OpenSBI mailing list and ready for review:
 
-[[PATCH 0/3] APLIC hwirq implementation for irqchip](https://lists.infradead.org/pipermail/opensbi/2026-February/009450.html)
+[[PATCH 0/3] APLIC hwirq implementation for irqchip](https://lore.kernel.org/opensbi/20260211222025.2463312-1-raymondmaoca@gmail.com/)
 
-[[PATCH 1/3] lib: sbi_irqchip: Add irqchip private context pointer in sbi_irqchip_device](https://lists.infradead.org/pipermail/opensbi/2026-February/009451.html)
+V2 rebased on recent OpenSBI refactoring and merged hwirq into irqchip:
 
-[[PATCH 2/3] lib: utils: irqchip: implement APLIC hwirq operation hooks](https://lists.infradead.org/pipermail/opensbi/2026-February/009452.html)
-
-[[PATCH 3/3][NOT-FOR-UPSTREAM] lib: utils: irqchip: add QEMU virt test for APLIC wired IRQs](https://lists.infradead.org/pipermail/opensbi/2026-February/009453.html)
+[[PATCH v2 1/3] lib: utils: irqchip: implement APLIC hwirq operation hooks](https://lore.kernel.org/opensbi/20260504171342.1655882-1-raymondmaoca@gmail.com/)
