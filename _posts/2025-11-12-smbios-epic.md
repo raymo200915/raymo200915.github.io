@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Enhancing U-Boot SMBIOS on Arm64: Full Support for System, Board, CPU, and Memory Tables"
+title: "Enhancing U-Boot SMBIOS on ARM64: Full Support for System, Board, CPU, and Memory Tables"
 ---
 # Overview
 
@@ -8,16 +8,16 @@ System Management BIOS (SMBIOS) is an industry standard that defines a structure
 Through SMBIOS tables, firmware can describe details such as the system manufacturer, board information, processor configuration, memory layout, and slot topology — all without relying on device-specific probing or vendor-specific interfaces.
 
 On Linux systems, distro tooling and system management utilities such as dmidecode, lshw, fwupd, and systemd-hwdb depend on SMBIOS data to identify platforms, enable firmware update mechanisms, and collect system inventory for analytics or compliance.
-When U-Boot is used as the boot firmware on embedded or virtualized Arm platforms, providing accurate SMBIOS tables becomes essential for integration with modern Linux distributions and their infrastructure tooling.
+When U-Boot is used as the boot firmware on embedded or virtualized ARM platforms, providing accurate SMBIOS tables becomes essential for integration with modern Linux distributions and their infrastructure tooling.
 
 Historically, U-Boot had limited SMBIOS support.
 Before my work, it only implemented a minimal set of types — primarily Type #0 to Type #4 (BIOS, System, Baseboard, Chassis, and Processor Information).
-Even within these, many fields were hard-coded placeholder values (e.g., “U-Boot” as manufacturer, or fixed slot numbers and memory sizes) instead of reflecting the actual hardware configuration obtained from the Device Tree or runtime data.
+Even within these, many fields were hard-coded placeholder values (e.g., “U-Boot” as manufacturer, or fixed slot numbers and memory sizes) instead of reflecting the actual hardware configuration obtained from the Devicetree or runtime data.
 
 This limitation caused issues for systems expecting realistic SMBIOS data — for instance, when Linux userspace tools tried to query memory topology, system slots, or CPU configuration, they would often receive incomplete or inaccurate information.
 
 To address this gap, I extended U-Boot’s SMBIOS implementation to support all mandatory structures (Type #0 ~ #4 / #7 / #9 / #16 / #17 / #19) covering System, Baseboard, Chassis, Processor, Cache, System Slot, Physical Memory Array, Memory Device, and Memory Array Mapped Address.
-My goal was to make SMBIOS generation dynamic and data-driven, extracting real platform information from the Device Tree and other subsystems, ensuring that downstream Linux tools can correctly recognize and manage U-Boot-based platforms just like any PC or server firmware.
+My goal was to make SMBIOS generation dynamic and data-driven, extracting real platform information from the Devicetree and other subsystems, ensuring that downstream Linux tools can correctly recognize and manage U-Boot-based platforms just like any PC or server firmware.
 
 # Implementation Epic
 
@@ -39,12 +39,12 @@ Design Goals:
 
   - From the sysinfo driver, which reads hardware information directly and converts it into SMBIOS-compatible format.
 
-  - From explicit definitions under the SMBIOS subtree \[1\] in the Device Tree.
+  - From explicit definitions under the SMBIOS subtree \[1\] in the Devicetree.
 
     Properties follow the SMBIOS specification using lowercase
     hyphen-separated names.
 
-  - Fallback to scan the entire Device Tree, locate relevant information, and convert it into the SMBIOS-required format.
+  - Fallback to scan the entire Devicetree, locate relevant information, and convert it into the SMBIOS-required format.
 
 - To minimize size-growth for those platforms which have not sufficient ROM spaces or do not need detailed SMBIOS information, building with new added type structures / properties / sysinfo drivers should be under kconfig control.
 
@@ -54,17 +54,17 @@ Design Goals:
 
 - Created sysinfo driver to populate platform private data.
 
-- Created an arch-specific driver to fetch CPU data for all Arm64-based platforms, and registered it to the sysinfo driver.
+- Created an arch-specific driver to fetch CPU data for all ARM64-based platforms, and registered it to the sysinfo driver.
 
-- Added generic SMBIOS DTS file for Arm64 platforms \[2\] representing the SMBIOS subtree \[1\].
+- Added generic SMBIOS DTS file for ARM64 platforms \[2\] representing the SMBIOS subtree \[1\].
 
-- Refactored wrapper function `smbios_get_val_si()` and `smbios_add_prop_si()`, which act as wrappers on top of the sysinfo driver, and retrieves SMBIOS system information follow the priority "sysinfo driver (hardware information) -> SMBIOS subtree \[1\] subnodes -> entire Device Tree".
+- Refactored wrapper function `smbios_get_val_si()` and `smbios_add_prop_si()`, which act as wrappers on top of the sysinfo driver, and retrieves SMBIOS system information follow the priority "sysinfo driver (hardware information) -> SMBIOS subtree \[1\] subnodes -> entire Devicetree".
 
 - New kconfig `GENERATE_SMBIOS_TABLE_VERBOSE` was introduced to include / exclude new structures / properties.
 
 ## Step 2 - Introduced Cache Information (Type #7) Support
 
-- An arch-specific driver was created for all Arm64-based platforms to fetch cache data via sysinfo driver.
+- An arch-specific driver was created for all ARM64-based platforms to fetch cache data via sysinfo driver.
 
 - Implemented all Type #7 required elements through `smbios_get_val_si()` and `smbios_add_prop_si()`, and link the handles to Type #4.
 
@@ -86,7 +86,7 @@ Design Goals:
     This method supports precise platform-defined overrides and system
     descriptions.
 
-  - Fallback to automatic discovery from the entire Device Tree.
+  - Fallback to automatic discovery from the entire Devicetree.
 
 - The support for Type #7 is under control by kconfig `GENERATE_SMBIOS_TABLE_VERBOSE`.
 
@@ -110,16 +110,16 @@ Design Goals:
     This approach allows full customization of each system slot and is
     especially suitable for platforms with well-defined slot topology.
 
-  - Fallback to automatic discovery from the entire Device Tree:
+  - Fallback to automatic discovery from the entire Devicetree:
 
     If child node under `/smbios/smbios/system-slot` does not exist, the implementation will:
 
-    - scan the entire Device Tree for nodes whose `device_type` matches known slot-related types (`pci`, `isa`, `pcmcia`, etc.).
+    - scan the entire Devicetree for nodes whose `device_type` matches known slot-related types (`pci`, `isa`, `pcmcia`, etc.).
 
     - When a match is found, default values or heuristics are applied to populate the System Slot table.
 
     This mode is useful for platforms that lack explicit SMBIOS nodes
-    but still expose slot topology via standard Device Tree conventions.
+    but still expose slot topology via standard Devicetree conventions.
 
   Together, two approaches ensure that Type #9 entries are available
   whether explicitly described or automatically derived.
@@ -145,7 +145,7 @@ Design Goals:
     This method supports precise platform-defined overrides and system
     descriptions.
 
-  - Fallback to automatic discovery from the entire Device Tree:
+  - Fallback to automatic discovery from the entire Devicetree:
 
     If the relevant child nodes are missing, the implementation will:
 
@@ -476,7 +476,7 @@ Design Goals:
 };
 ```
 
-\[8\] Example of `memory` Device Tree nodes
+\[8\] Example of `memory` Devicetree nodes
 
 ```dts
 memory@80000000 {
@@ -485,7 +485,7 @@ memory@80000000 {
 };
 ```
 
-\[9\] Example of `memory-controller` Device Tree nodes
+\[9\] Example of `memory-controller` Devicetree nodes
 
 ```dts
 memory-controller@f0000000 {

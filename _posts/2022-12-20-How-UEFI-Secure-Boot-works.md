@@ -428,7 +428,7 @@ CONFIG_EFI_VARIABLE_NO_STORE=y
 # CONFIG_EFI_VARIABLES_PRESEED is not set
 ```
 
-Boot the EFI image file from the memory address (`fdt_addr` is optional is you want to run with a specified Device Tree)
+Boot the EFI image file from the memory address (`fdt_addr` is optional is you want to run with a specified Devicetree)
 
 ```bash
 bootefi ${loadaddr} ${fdt_addr}

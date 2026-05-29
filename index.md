@@ -11,7 +11,7 @@ This blog documents my research, investigations, lessons learned and hands-on ex
 - OSS (Open Source Software) contributions and ecosystem collaboration
 - Embedded Systems practices
 - RISC-V ecosystem enablement cooperation with RISE (RISC-V Software Ecosystem)
-- Trusted Firmware stacks in Arm ecosystem (TF-A / OP-TEE / U-Boot)
+- Trusted Firmware stacks in ARM ecosystem (TF-A / OP-TEE / U-Boot)
 - Measured Boot, TPM
 - Cryptography, Secure Boot
 - OTA update systems

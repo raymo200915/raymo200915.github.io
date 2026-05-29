@@ -13,14 +13,14 @@ A lightweight VIRQ (Virtual IRQ) mapping / routing / couriering / domain switchi
 
 VIRQ layer provides:
   - stable and scalable per-MPXY(Message Proxy)-channel mapping between HWIRQ (Hardware IRQ) and VIRQ,
-  - DeviceTree-driven domain routing rules,
+  - Devicetree-driven domain routing rules,
   - Per-(domain,hart) pending queue couriering and state management,
   - SEIP (Supervisor External Interrupt Pending)-based notification,
   - Domain-aware VIRQ couriering that allows switching context to the target domain and returning to the previous domain after VIRQ queue drained, and
   - ECALL(Environment Call) extension to pop and complete an enqueued VIRQ.
 
 A test routine is provided to demonstrate the full coverage of the complete IRQ handling path for UART RX (receiver) (HWIRQ 10) from M-mode to an S-mode payload (bare-metal application) using:
-  - DeviceTree routing rules population and VIRQ handler registration during cold boot
+  - Devicetree routing rules population and VIRQ handler registration during cold boot
   - HWIRQ / VIRQ mapping and routing to the destination domain when a HWIRQ is asserted during run-time
   - HWIRQ masking, VIRQ enqueue and SEIP notification
   - Domain context switch will be carried on if the target domain is not the current one
@@ -69,7 +69,7 @@ The VIRQ layer is composed of 4 major parts:
   - Provides a stable per-MPXY-channel mapping between a host interrupt endpoint (`chip_uid`, `hwirq`) and a VIRQ number.
   - VIRQ number allocation uses a growable bitmap.
 2. HWIRQ / domain routing rules
-  - Routing rules are described in DeviceTree using Linux IRQ standard property interrupts-extended under node `/chosen/opensbi-domains/rpmi_sysirq_intc` which emulates an MPXY channel for a particular domain by `opensbi,mpxy-channel-id`.
+  - Routing rules are described in Devicetree using Linux IRQ standard property interrupts-extended under node `/chosen/opensbi-domains/rpmi_sysirq_intc` which emulates an MPXY channel for a particular domain by `opensbi,mpxy-channel-id`.
   - Each entry is converted and cached as a routing rule.
   - Default behavior for compatible fallback purpose: if an asserted HWIRQ does not match any routing rule, it will be routed to the root domain (MPXY channel 0).
 3. Per-(domain,hart) pending queue couriering
@@ -146,7 +146,7 @@ See the section [Mapping API](#mapping-api) for the detailed programming interfa
 
 ## HWIRQ / Domain Routing Rules
 
-Routing rules are described in DeviceTree property `interrupts-extended` under node `/chosen/opensbi-domains/rpmi_sysirq_intc`.
+Routing rules are described in Devicetree property `interrupts-extended` under node `/chosen/opensbi-domains/rpmi_sysirq_intc`.
 
 For example:
 
@@ -424,7 +424,7 @@ Hart 2 for bare-metal applications:
 
 Hart 3 is free.
 
-The goal is to demonstrate that UART RX (HWIRQ 10) interrupts are mapped, routed, and couriered to bare-metal applications according to DeviceTree routing rules, without impacting Linux interrupt handling.
+The goal is to demonstrate that UART RX (HWIRQ 10) interrupts are mapped, routed, and couriered to bare-metal applications according to Devicetree routing rules, without impacting Linux interrupt handling.
 
 ```text
               +--------------------+
@@ -492,7 +492,7 @@ Start QEMU and launch the bare-metal application and kernel:
 ./output/images/start-qemu-bm-kernel.sh
 ```
 
-This script compiles and applies the 'hwirq_bind_domain_linux_bmapp.dts' overlay to the dumped QEMU base DeviceTree before re-running QEMU.
+This script compiles and applies the 'hwirq_bind_domain_linux_bmapp.dts' overlay to the dumped QEMU base Devicetree before re-running QEMU.
 
 A representative overlay fragment that binds hart 2 to domain 1 / 2 and routes UART RX (HWIRQ 10) to domain 2 is shown below:
 
@@ -723,7 +723,7 @@ IPI7: 0 0 KGDB roundup interrupts
 
 The APLIC-DIRECT counters should keep incrementing. Continue pressing keys in the bare-metal console while watching `/proc/interrupts` in Linux; Linux IRQ delivery should remain unaffected.
 
-This demonstrates that VIRQ mapping, routing, and couriering only apply to HWIRQs explicitly bound to a destination domain through DeviceTree rules. Other interrupts continue to follow the default root-domain path.
+This demonstrates that VIRQ mapping, routing, and couriering only apply to HWIRQs explicitly bound to a destination domain through Devicetree rules. Other interrupts continue to follow the default root-domain path.
 
 # Upstream Efforts
 

@@ -33,7 +33,7 @@ U-Boot proper (BL33), not in the SPL stage by default. Recent U-Boot
 versions include a generic measured boot framework implemented by Linaro
 that can log events and extend PCRs during OS boot. For example,
 U-Boot’s EFI TCG2 protocol and legacy boot measurement code can
-measure Linux images, initramfs, device trees, etc., and replay event
+measure Linux images, initramfs, Devicetree, etc., and replay event
 logs from the previous boot stage, using a TPM 2.0 device​. There is
 also support to append events to a log in memory, which the kernel can
 later retrieve. However, in the default configuration, U-Boot SPL does
@@ -73,7 +73,7 @@ through TPM 2.0 drivers.
   allows emulating a TPM 2.0 device via swtpm through memory-mapped
   TIS interface for QEMU platforms while `CONFIG_SPL_TPM2_MMIO` is
   missing for SPL. On top of that the support of SPL on QEMU is
-  missing for Arm architecture.
+  missing for ARM architecture.
 
 ## Firmware Handoff Support
 
@@ -235,7 +235,7 @@ TPM usage. This platform is actively used in the community.
 
 Other notable platforms include:
 
-QEMU arm64: Missing SPL support for Arm while risc-v support does exist.
+QEMU arm64: Missing SPL support for ARM while risc-v support does exist.
 
 NXP i.MX 8M EVK: While these evaluation boards don’t ship with a TPM by
 default, they expose SPI/I2C buses where a TPM module can be attached.

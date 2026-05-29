@@ -42,7 +42,7 @@ Enabling the flow typically involves:
 
 A typical startup sequence might look like this:
 
-- BL2 creates the TL and inserts an entry containing the system’s Device Tree Blob.
+- BL2 creates the TL and inserts an entry containing the system’s Devicetree Blob.
 
 - BL31 validates and augments the TL (e.g., OP-TEE memory layout).
 
@@ -60,7 +60,7 @@ This common handoff format:
 
 - Improves maintainability across different SoCs and boards
 
-- Avoids misusing the Device Tree as a general-purpose message-passing structure
+- Avoids misusing the Devicetree as a general-purpose message-passing structure
 
 - Enables more predictable and repeatable boot flows in both secure and non-secure environments
 
@@ -86,7 +86,7 @@ Contributions to the specification:
 
 TF-A:
 
-- Introduce Transfer List library, Device Tree and OP-TEE pageable part handoff, QEMU platform code and enablement in BL2 / BL31:
+- Introduce Transfer List library, Devicetree and OP-TEE pageable part handoff, QEMU platform code and enablement in BL2 / BL31:
 
   - [22178: feat(qemu): implement firmware handoff on qemu](https://review.trustedfirmware.org/c/TF-A/trusted-firmware-a/+/22178)
 
@@ -118,7 +118,7 @@ TF-A:
 
 OP-TEE:
 
-- Introduce Transfer List library, memory layout update, Device Tree and OP-TEE pageable part handoff in OP-TEE OS:
+- Introduce Transfer List library, memory layout update, Devicetree and OP-TEE pageable part handoff in OP-TEE OS:
 
   - [OP-TEE/optee_os#6308: Firmware handoff](https://github.com/OP-TEE/optee_os/pull/6308)
 
@@ -142,7 +142,7 @@ U-Boot:
 
   - [\[PATCH v5 00/11\] Support Firmware Handoff spec via bloblist](https://lore.kernel.org/u-boot/20231229174244.892818-1-raymond.mao@linaro.org/)
 
-- Basic handoff flow from previous boot stage, Device Tree handoff:
+- Basic handoff flow from previous boot stage, Devicetree handoff:
 
   - [\[PATCH v8 0/8\] Handoff bloblist from previous boot stage](https://lore.kernel.org/u-boot/20240203163631.177508-1-raymond.mao@linaro.org/)
 
@@ -154,7 +154,7 @@ U-Boot:
 
   - [\[PATCH v7 3/3\] tpm: get tpm event log from bloblist](https://lore.kernel.org/u-boot/20250127144941.645544-3-raymond.mao@linaro.org/)
 
-- Extension for Device Tree Overlay handoff:
+- Extension for Devicetree Overlay handoff:
 
   - [\[PATCH v3 0/6\] Add support for DT overlays handoff](https://lore.kernel.org/u-boot/20250718141621.3147633-1-raymond.mao@linaro.org/)
 

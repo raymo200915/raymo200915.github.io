@@ -138,9 +138,9 @@ Event Log transmission across the boot chain:
 
       - Writes the TCG Event Log structure into memory.
 
-      - Passes pointer via device tree or Firmware Handoff (if enabled).
+      - Passes pointer via Devicetree or Firmware Handoff (if enabled).
 
-  2. OP-TEE hand over the Event Log via device tree or Firmware Handoff
+  2. OP-TEE hand over the Event Log via Devicetree or Firmware Handoff
     (if enabled).
 
   3. U-Boot consumes Event Log and extends PCR.

@@ -22,13 +22,13 @@ To address this, I introduced Measured Boot and Firmware Handoff testing
 in U-Boot and OP-TEE CI, where:
 
 - TF-A is built with Measured Boot / Firmware Handoff enabled, generating
-Transfer List with multiple Transfer Entries includes Device Tree and
+Transfer List with multiple Transfer Entries includes Devicetree and
 TCG2 Event Log;
 
-- OP-TEE appends the Device Tree and handoff the complete Transfer List;
+- OP-TEE appends the Devicetree and handoff the complete Transfer List;
 
 - U-Boot includes support for TCG2/TPM2 with Firmware Handoff / Measured
-Boot enabled to consume the Device Tree / Event Log and extend PCRs.
+Boot enabled to consume the Devicetree / Event Log and extend PCRs.
 
 # U-Boot CI Enablement
 
@@ -39,7 +39,7 @@ and verifies:
 
   - Transfer List and Transfer Entries structure
 
-  - Device Tree structure
+  - Devicetree structure
 
   - Event Log structure and log entries
 
@@ -75,11 +75,11 @@ To introduce and enable the new CI tests, my patch series includes:
     Boot enabled.
 
   - Pytest to validate the Firmware Handoff feature via bloblist by
-    checking the existence of expected Device Tree nodes and TPM events
+    checking the existence of expected Devicetree nodes and TPM events
     generated and handed over from TF-A / OP-TEE.
 
     > The nodes `reserved-memory` and `firmware` appended by OP-TEE
-    > indicates a successful Device Tree handoff, while the events
+    > indicates a successful Devicetree handoff, while the events
     > `SECURE_RT_EL3`, `SECURE_RT_EL1_OPTEE` and
     > `SECURE_RT_EL1_OPTEE_EXTRA1` created by TF-A indicates a
     > successful Event Log handoff.
