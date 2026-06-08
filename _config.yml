@@ -5,7 +5,7 @@ url: https://raymo200915.github.io
 baseurl: ""
 markdown: kramdown
 highlighter: rouge
-footer_text: "© 2025 Raymond Mao<br>CISSP | OSS (Open Source Software) Advocate | Firmware Developer | IoT Security Professional | RISC-V | ARM ecosystems | Ex-Linaro | Ex-ARM | Ex-Broadcom | PMP"
+footer_text: "© 2022-2026 Raymond Mao<br>CISSP | OSS (Open Source Software) Advocate | Firmware Developer | IoT Security Professional | RISC-V | ARM ecosystems | Ex-Linaro | Ex-ARM | Ex-Broadcom | PMP"
 minima:
   header_pages:
     - about.md
