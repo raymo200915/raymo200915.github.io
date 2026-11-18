@@ -4,6 +4,40 @@
 
 @import "minima";
 
+:root {
+  color-scheme: dark;
+  --canvas: #181a1f;
+  --panel: #22252b;
+  --edge: #535c68;
+  --ink: #eef1f5;
+  --muted: #b8c0cc;
+  --link: #85caff;
+}
+
+body { background: var(--canvas); color: var(--ink); }
+a { color: var(--link); }
+a:visited { color: #c6b6ff; }
+a:hover { color: white; }
+:focus-visible { outline: 2px solid var(--link); outline-offset: 3px; }
+::selection { color: white; background: #315d83; }
+
+.site-header, .site-footer, .site-nav {
+  background: var(--panel);
+  border-color: var(--edge);
+}
+.site-header { border-top-color: var(--link); }
+.site-title, .site-title:visited, .site-nav .page-link { color: var(--ink); }
+.site-nav .menu-icon > svg path { fill: var(--ink); }
+.site-footer, .footer-col-wrapper, .post-meta { color: var(--muted); }
+blockquote { border-left-color: var(--link); color: var(--muted); }
+hr, code { border-color: var(--edge); }
+pre { background: var(--code-plain-bg); color: var(--code-plain-fg); }
+
+table { color: var(--ink); border-color: var(--edge); }
+table th, table td { border-color: var(--edge); }
+table th { background: #303842; }
+table tr:nth-child(even) { background: var(--panel); }
+
 /* ---- Custom Style Overrides ---- */
 
 /* post/page L1,L2,L3 */
@@ -46,7 +80,7 @@
 /* Post list date */
 .post-list .post-meta {
   font-size: 0.80rem;   /* default ~0.9rem */
-  color: #666;
+  color: var(--muted);
 }
 
 /* Homepage intro paragraph */
@@ -54,7 +88,7 @@
   display: block;
   font-size: 1.25rem;   /* enlarge */
   line-height: 1.6;
-  color: #444;
+  color: var(--ink);
   margin: .25rem 0 1rem;
   font-weight: 600;
 }
@@ -73,8 +107,8 @@
   --code-plain-bg: #f8f9fb;
   --code-plain-fg: #2f3542;
   --code-plain-border: #dfe4ea;
-  --code-inline-bg: #f3f4f6;
-  --code-inline-fg: #c7254e;
+  --code-inline-bg: #292d34;
+  --code-inline-fg: #ffbda4;
   --code-comment: #6a9955;
   --code-keyword: #569cd6;
   --code-storage: #c586c0;

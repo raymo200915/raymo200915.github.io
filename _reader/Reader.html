@@ -1,7 +1,8 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <style>
-*{box-sizing:border-box}body{margin:0;padding:4px;color:#243847;font:16px/1.5 Georgia,serif}
+:root{color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;padding:4px;background:#181a1f;color:#eef1f5;font:16px/1.5 Georgia,serif}
 form{display:grid;gap:.65rem;max-width:38rem}label{display:grid;gap:.2rem}
 body[data-mode="post"] {
   padding-inline: 0;
@@ -19,11 +20,12 @@ body[data-mode="post"] textarea {
   width: 100%;
   min-width: 0;
 }
-input,textarea,button{font:inherit;border:1px solid #899ba6;border-radius:4px;padding:.45rem .7rem}
-textarea{resize:vertical}button{justify-self:start;background:#234b5c;color:white;cursor:pointer}
+input,textarea,button{font:inherit;border:1px solid #899ba6;border-radius:4px;padding:.45rem .7rem;background:#22252b;color:#eef1f5}
+textarea{resize:vertical}button{justify-self:start;background:#85caff;color:#101820;cursor:pointer}
+:focus-visible{outline:2px solid #85caff;outline-offset:2px}
 button:disabled{opacity:.65}article{padding:.6rem 0;white-space:pre-wrap;overflow-wrap:anywhere}
 article + article{border-top:1px solid #ccd6db}
-article time{margin-inline-start:.6em;font-size:.875em}
+article time{margin-inline-start:.6em;color:#b8c0cc;font-size:.875em}
 </style></head><body data-mode="<?= mode ?>" data-post="<?= post ?>" data-token="<?= token ?>">
 <? if (mode === 'post') { ?>
 <button id="like" type="button" aria-label="Like this post">&#128077; Like <span id="count"></span></button>
