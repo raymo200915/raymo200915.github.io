@@ -15,6 +15,6 @@ header_pages:
   - about.md
   - subscribe.html
   - contact.html
-reader_app_url: ""
+reader_app_url: "https://script.google.com/macros/s/AKfycbyoqUH01j2DYp-Z3lab1PDc2AxVSt8JUKnxMS1xswGp1T0Cmdfn3qSmE1oRumsj68g/exec"
 plugins:
   - jekyll-sitemap
