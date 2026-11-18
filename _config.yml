@@ -9,5 +9,12 @@ footer_text: "© 2022-2026 Raymond Mao<br>CISSP | OSS (Open Source Software) Adv
 minima:
   header_pages:
     - about.md
+    - subscribe.html
+    - contact.html
+header_pages:
+  - about.md
+  - subscribe.html
+  - contact.html
+reader_app_url: ""
 plugins:
   - jekyll-sitemap

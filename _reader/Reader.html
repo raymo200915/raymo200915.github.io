@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<style>
+*{box-sizing:border-box}body{margin:0;padding:4px;color:#243847;font:16px/1.5 Georgia,serif}
+form{display:grid;gap:.65rem;max-width:38rem}label{display:grid;gap:.2rem}
+body[data-mode="post"] {
+  padding-inline: 0;
+}
+body[data-mode="post"] form {
+  max-width: none;
+  grid-template-columns: minmax(0, 1fr);
+}
+body[data-mode="post"] h3 {
+  border-bottom: 1px solid #899ba6;
+  padding-bottom: .4rem;
+}
+body[data-mode="post"] input,
+body[data-mode="post"] textarea {
+  width: 100%;
+  min-width: 0;
+}
+input,textarea,button{font:inherit;border:1px solid #899ba6;border-radius:4px;padding:.45rem .7rem}
+textarea{resize:vertical}button{justify-self:start;background:#234b5c;color:white;cursor:pointer}
+button:disabled{opacity:.65}article{padding:.6rem 0;white-space:pre-wrap;overflow-wrap:anywhere}
+article + article{border-top:1px solid #ccd6db}
+article time{margin-inline-start:.6em;font-size:.875em}
+</style></head><body data-mode="<?= mode ?>" data-post="<?= post ?>" data-token="<?= token ?>">
+<? if (mode === 'post') { ?>
+<button id="like" type="button" aria-label="Like this post">&#128077; Like <span id="count"></span></button>
+<h3>Comments</h3><div id="comments"></div>
+<? } ?>
+<form>
+<? if (mode === 'post' || mode === 'contact') { ?>
+<label>Name<input name="name" autocomplete="name" maxlength="100" required></label>
+<? } if (mode === 'subscribe' || mode === 'contact') { ?>
+<label>Email<input name="email" type="email" autocomplete="email" maxlength="254" required></label>
+<? } if (mode === 'post' || mode === 'contact') { ?>
+<label><?= mode === 'post' ? 'Comment' : 'Message' ?><textarea name="message" rows="4" maxlength="5000" required></textarea></label>
+<? } ?>
+<button><?= ({post:'Submit for review', contact:'Send message', subscribe:'Subscribe', confirm:'Confirm subscription', unsubscribe:'Unsubscribe'})[mode] ?></button>
+</form><p role="status" id="status"></p>
+<script>
+const {mode,post,token} = document.body.dataset;
+const form = document.querySelector('form');
+const statusLine = document.querySelector('#status');
+const failure = error => { statusLine.textContent = error.message; };
+function refresh() {
+  google.script.run.withFailureHandler(failure).withSuccessHandler(data => {
+    document.querySelector('#count').textContent = '(' + data.likes + ')';
+    const comments = document.querySelector('#comments');
+    comments.replaceChildren();
+    for (const [name,message,submittedAt] of data.comments) {
+      const article = document.createElement('article');
+      const author = document.createElement('strong');
+      author.textContent = name;
+      article.append(author);
+      if (submittedAt) {
+        const time = document.createElement('time');
+        time.dateTime = submittedAt;
+        time.textContent = new Date(submittedAt).toLocaleString(undefined, {
+          dateStyle: 'medium', timeStyle: 'short'
+        });
+        article.append(time);
+      }
+      article.append(document.createElement('br'),document.createTextNode(message));
+      comments.append(article);
+    }
+  }).feedback(post);
+}
+function send(action,data,button) {
+  button.disabled = true;
+  google.script.run.withFailureHandler(error => {button.disabled=false; failure(error);})
+    .withSuccessHandler(message => {
+      statusLine.textContent = message;
+      if (action !== 'like') { form.reset(); button.disabled=false; }
+      if (mode === 'post') refresh();
+    }).submit(action,{...data,post,token});
+}
+form.onsubmit = event => {
+  event.preventDefault();
+  send(mode === 'post' ? 'comment' : mode,Object.fromEntries(new FormData(form)),form.querySelector('button'));
+};
+if (mode === 'post') {
+  refresh();
+  const like = document.querySelector('#like');
+  like.onclick = () => {
+    try {
+      const browser = localStorage.readerId || crypto.randomUUID();
+      localStorage.readerId = browser;
+      send('like',{browser},like);
+    } catch { statusLine.textContent = 'Allow browser storage to record a like.'; }
+  };
+}
+</script></body></html>

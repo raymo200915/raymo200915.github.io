@@ -1,0 +1,5 @@
+{% if site.reader_app_url and site.reader_app_url != empty %}
+<iframe title="{{ include.mode | capitalize }} form" style="width:100%;height:{% if include.mode == 'post' %}32rem{% elsif include.mode == 'contact' %}24rem{% else %}12rem{% endif %};border:0" loading="lazy" src="{{ site.reader_app_url | escape }}?mode={{ include.mode }}&amp;post={{ page.url | url_encode }}"></iframe>
+{% else %}
+<p>Reader services are awaiting activation.</p>
+{% endif %}
